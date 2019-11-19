@@ -1,5 +1,0 @@
-# QCOM hardware
-BOARD_USES_QCOM_HARDWARE := true
-
-# Power HAL
-TARGET_POWERHAL_VARIANT := qcom
