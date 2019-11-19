@@ -26,7 +26,7 @@ PRODUCT_AAPT_PREBUILT_DPI := xhdpi 280dpi hdpi tvdpi mdpi ldpi
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 
 # Properties
--include $(VENDOR_PATH)/system_prop.mk
+-include $(LOCAL_PATH)/system_prop.mk
 
 # Permissions
 PRODUCT_COPY_FILES += \
@@ -226,4 +226,5 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/wifi/WCNSS_wlan_dictionary.dat:system/etc/firmware/wlan/prima/WCNSS_wlan_dictionary.dat
 
 # Vendor product configurations
+$(call inherit-product, vendor/huawei/scale/scale-vendor.mk)
 $(call inherit-product, vendor/huawei/msm8909-common/msm8909-common-vendor.mk)

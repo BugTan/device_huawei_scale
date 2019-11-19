@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-VENDOR_PATH := device/huawei/msm8909-common
+DEVICE_PATH := device/huawei/scale
 
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := MSM8909
@@ -30,6 +30,9 @@ TARGET_ARCH_VARIANT := armv7-a-neon
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_VARIANT := cortex-a7
+
+# Assert
+TARGET_OTA_ASSERT_DEVICE := Honor4a,honor4a,Honor4A,honor4A,y6,Y6,scale,Scale,SCL-AL00,SCL-CL00,SCL-L01,SCL-L02,SCL-L03,SCL-L04,SCL-L21,SCL-TL00,SCL-TL10,SCL-U03,SCL-U21,SCL-U23,SCL-U31,SCC-U21
 
 # Kernel
 BOARD_KERNEL_BASE := 0x80000000
@@ -58,7 +61,7 @@ USE_CUSTOM_AUDIO_POLICY := 1
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH_QCOM := true
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(VENDOR_PATH)/bluetooth
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(DEVICE_PATH)/bluetooth
 
 # Camera
 TARGET_HAS_LEGACY_CAMERA_HAL1 := true
@@ -72,7 +75,7 @@ BOARD_GLOBAL_CFLAGS += -DCAMERA_VENDOR_L_COMPAT
 BOARD_USES_CYANOGEN_HARDWARE := true
 BOARD_HARDWARE_CLASS += \
     hardware/cyanogen/cmhw \
-    $(VENDOR_PATH)/cmhw
+    $(DEVICE_PATH)/cmhw
 
 # CPUSets
 ENABLE_CPUSETS := true
@@ -143,12 +146,12 @@ TARGET_TAP_TO_WAKE_NODE := "/sys/touch_screen/easy_wakeup_gesture"
 BOARD_USES_QCOM_HARDWARE := true
 
 # Recovery
-TARGET_RECOVERY_DEVICE_DIRS += $(VENDOR_PATH)
+TARGET_RECOVERY_DEVICE_DIRS += $(DEVICE_PATH)
 #RECOVERY_VARIANT := twrp
 ifneq ($(RECOVERY_VARIANT),twrp)
-TARGET_RECOVERY_FSTAB := $(VENDOR_PATH)/recovery/recovery.fstab
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/recovery.fstab
 else
-TARGET_RECOVERY_FSTAB := $(VENDOR_PATH)/recovery/twrp.fstab
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/twrp.fstab
 RECOVERY_GRAPHICS_FORCE_USE_LINELENGTH := true
 DEVICE_RESOLUTION := 720x1280
 RECOVERY_SDCARD_ON_DATA := true
@@ -167,7 +170,7 @@ BOARD_NO_SECURE_DISCARD := true
 
 # Releasetools
 TARGET_RECOVERY_UPDATER_LIBS := librecovery_updater_cm
-TARGET_RELEASETOOLS_EXTENSIONS := $(VENDOR_PATH)
+TARGET_RELEASETOOLS_EXTENSIONS := $(DEVICE_PATH)
 
 # RIL
 TARGET_RIL_VARIANT := caf
@@ -175,13 +178,13 @@ BOARD_GLOBAL_CFLAGS += -DUSE_RIL_VERSION_11
 
 # SELinux
 include device/qcom/sepolicy/sepolicy.mk
-BOARD_SEPOLICY_DIRS += $(VENDOR_PATH)/sepolicy
+BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy
 
 # Sensors
 USE_SENSOR_MULTI_HAL := true
 
 # Vendor init
-TARGET_LIBINIT_MSM8909_DEFINES_FILE := $(VENDOR_PATH)/init/init_scale.cpp
+TARGET_LIBINIT_MSM8909_DEFINES_FILE := $(DEVICE_PATH)/init/init_scale.cpp
 TARGET_INIT_VENDOR_LIB := libinit_msm8909
 TARGET_PLATFORM_DEVICE_BASE := /devices/soc.0/
 TARGET_RECOVERY_DEVICE_MODULES := libinit_msm8909

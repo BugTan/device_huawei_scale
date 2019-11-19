@@ -1,7 +1,6 @@
 #!/bin/bash
-
 # Copyright (C) 2016 The CyanogenMod Project
-#           (C) 2017 The LineageOS Project
+#           (C) 2017-2019 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,7 +16,11 @@
 
 set -e
 
-INITIAL_COPYRIGHT_YEAR=2015
+# Required!
+DEVICE=scale
+VENDOR=huawei
+
+INITIAL_COPYRIGHT_YEAR=2019
 
 # Load extractutils and do some sanity checks
 MY_DIR="${BASH_SOURCE%/*}"
@@ -33,10 +36,10 @@ fi
 . "$HELPER"
 
 # Initialize the helper for common
-setup_vendor "$DEVICE_COMMON" "$VENDOR" "$CM_ROOT" "true"
+setup_vendor "$DEVICE" "$VENDOR" "$CM_ROOT"
 
 # Copyright headers and guards
-write_headers "scale"
+write_headers
 
 # The standard common blobs
 write_makefiles "$MY_DIR"/proprietary-files.txt
@@ -57,17 +60,3 @@ EOF
 
 # We are done!
 write_footers
-
-if [ -s "$MY_DIR"/../$DEVICE/proprietary-files.txt ]; then
-    # Reinitialize the helper for device
-    setup_vendor "$DEVICE" "$VENDOR" "$CM_ROOT"
-
-    # Copyright headers and guards
-    write_headers
-
-    # The standard device blobs
-    write_makefiles "$MY_DIR"/../$DEVICE/proprietary-files.txt
-
-    # We are done!
-    write_footers
-fi
