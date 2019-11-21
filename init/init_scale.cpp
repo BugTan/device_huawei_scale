@@ -1,5 +1,7 @@
 /*
+   Copyright (c) 2014, The Linux Foundation. All rights reserved.
    Copyright (c) 2016, The CyanogenMod Project
+   Copyright (c) 2019, The LineageOS Project
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are
@@ -40,14 +42,19 @@
 #define _REALLY_INCLUDE_SYS__SYSTEM_PROPERTIES_H_
 #include <sys/_system_properties.h>
 
+#include <android-base/file.h>
+#include <android-base/logging.h>
 #include <android-base/strings.h>
 
-#include "vendor_init.h"
 #include "property_service.h"
-#include "log.h"
-#include "util.h"
+#include "vendor_init.h"
 
+using android::base::ReadFileToString;
 using android::base::Trim;
+
+using namespace std;
+
+const char *APP_INFO = "/proc/app_info";
 
 void property_override(char const prop[], char const value[])
 {
@@ -60,215 +67,126 @@ void property_override(char const prop[], char const value[])
         __system_property_add(prop, strlen(prop), value, strlen(value));
 }
 
+void set_model(const char *model) {
+    property_override("ro.build.product", model);
+    property_override("ro.product.device", model);
+    property_override("ro.product.model", model);
+}
+
 void init_target_properties()
 {
-    std::ifstream fin;
-    std::string buf;
+    ifstream fin;
+    string buf;
 
-    fin.open("/proc/app_info");
+    fin.open(APP_INFO, ios::in);
+    if (!fin) {
+        LOG(ERROR) << __func__ << ": Failed to open " << APP_INFO;
+        return;
+    }
+
     while (getline(fin, buf))
-        if (buf.find("huawei_fac_product_name") != std::string::npos)
+        if (buf.find("huawei_fac_product_name") != string::npos)
             break;
     fin.close();
 
-    property_set("qemu.hw.mainkeys", "0");
-
     /* SCL-AL00 */
-    if (buf.find("SCL-AL00") != std::string::npos) {
-        property_override("ro.product.model", "SCL-AL00");
-        property_override("ro.product.device", "SCL-AL00");
-        property_override("ro.build.product", "SCL-AL00");
-        property_set("ro.config.dsds_mode", "umts_gsm");
-        property_set("persist.dsds.enabled", "true");
-        property_set("persist.radio.multisim.config", "dsds");
-        property_set("ro.telephony.ril.config", "simactivation");
-        property_set("persist.radio.dont_use_dsd", "true");
-        property_set("ro.multi.rid", "true");
-        property_set("ro.config.hw_showSimName", "true");
-        property_set("ro.dual.sim.phone", "true");
+    if (buf.find("SCL-AL00") != string::npos) {
+        set_model("SCL-AL00");
         property_set("ro.build.description", "SCL-AL00-user 7.1.1 GRJ90 C432B150 release-keys");
         property_set("ro.build.fingerprint", "Huawei/SCL-AL00/hwSCL-Q:7.1.1/HuaweiSCL-AL00/C432B150:user/release-keys");
-    }
+
     /* SCL-CL00 */
-    if (buf.find("SCL-CL00") != std::string::npos) {
-        property_override("ro.product.model", "SCL-CL00");
-        property_override("ro.product.device", "SCL-CL00");
-        property_override("ro.build.product", "SCL-CL00");
-        property_set("ro.config.dsds_mode", "umts_gsm");
-        property_set("persist.dsds.enabled", "true");
-        property_set("persist.radio.multisim.config", "dsds");
-        property_set("ro.telephony.ril.config", "simactivation");
-        property_set("persist.radio.dont_use_dsd", "true");
-        property_set("ro.multi.rid", "true");
-        property_set("ro.config.hw_showSimName", "true");
-        property_set("ro.dual.sim.phone", "true");
+    } else if (buf.find("SCL-CL00") != string::npos) {
+        set_model("SCL-CL00");
         property_set("ro.build.description", "SCL-CL00-user 7.1.1 GRJ90 C432B150 release-keys");
         property_set("ro.build.fingerprint", "Huawei/SCL-CL00/hwSCL-Q:7.1.1/HuaweiSCL-CL00/C432B150:user/release-keys");
-    }
+
     /* SCL-L01 */
-    if (buf.find("SCL-L01") != std::string::npos) {
-        property_override("ro.product.model", "SCL-L01");
-        property_override("ro.product.device", "SCL-L01");
-        property_override("ro.build.product", "SCL-L01");
+    } else if (buf.find("SCL-L01") != string::npos) {
+        set_model("SCL-L01");
         property_set("ro.build.description", "SCL-L01-user 7.1.1 GRJ90 C432B150 release-keys");
         property_set("ro.build.fingerprint", "Huawei/SCL-L01/hwSCL-Q:7.1.1/HuaweiSCL-L01/C432B150:user/release-keys");
-    }
+
     /* SCL-L02 */
-    if (buf.find("SCL-L02") != std::string::npos) {
-        property_override("ro.product.model", "SCL-L02");
-        property_override("ro.product.device", "SCL-L02");
-        property_override("ro.build.product", "SCL-L02");
+    } else if (buf.find("SCL-L02") != string::npos) {
+        set_model("SCL-L02");
         property_set("ro.build.description", "SCL-L02-user 7.1.1 GRJ90 C432B150 release-keys");
         property_set("ro.build.fingerprint", "Huawei/SCL-L02/hwSCL-Q:7.1.1/HuaweiSCL-L02/C432B150:user/release-keys");
-    }
+
     /* SCL-L03 */
-    if (buf.find("SCL-L03") != std::string::npos) {
-        property_override("ro.product.model", "SCL-L03");
-        property_override("ro.product.device", "SCL-L03");
-        property_override("ro.build.product", "SCL-L03");
+    } else if (buf.find("SCL-L03") != string::npos) {
+        set_model("SCL-L03");
         property_set("ro.build.description", "SCL-L03-user 7.1.1 GRJ90 C432B150 release-keys");
         property_set("ro.build.fingerprint", "Huawei/SCL-L03/hwSCL-Q:7.1.1/HuaweiSCL-L03/C432B150:user/release-keys");
-    }
+
     /* SCL-L04 */
-    if (buf.find("SCL-L04") != std::string::npos) {
-        property_override("ro.product.model", "SCL-L04");
-        property_override("ro.product.device", "SCL-L04");
-        property_override("ro.build.product", "SCL-L04");
+    } else if (buf.find("SCL-L04") != string::npos) {
+        set_model("SCL-L04");
         property_set("ro.build.description", "SCL-L04-user 7.1.1 GRJ90 C432B150 release-keys");
         property_set("ro.build.fingerprint", "Huawei/SCL-L04/hwSCL-Q:7.1.1/HuaweiSCL-L04/C432B150:user/release-keys");
-    }
+
     /* SCL-L21 */
-    if (buf.find("SCL-L21") != std::string::npos) {
-        property_override("ro.product.model", "SCL-L21");
-        property_override("ro.product.device", "SCL-L21");
-        property_override("ro.build.product", "SCL-L21");
-        property_set("ro.config.dsds_mode", "umts_gsm");
-        property_set("persist.dsds.enabled", "true");
-        property_set("persist.radio.multisim.config", "dsds");
-        property_set("ro.telephony.ril.config", "simactivation");
-        property_set("persist.radio.dont_use_dsd", "true");
-        property_set("ro.multi.rid", "true");
-        property_set("ro.config.hw_showSimName", "true");
-        property_set("ro.dual.sim.phone", "true");
+    } else if (buf.find("SCL-L21") != string::npos) {
+        set_model("SCL-L21");
         property_set("ro.build.description", "SCL-L21-user 7.1.1 GRJ90 C432B150 release-keys");
         property_set("ro.build.fingerprint", "Huawei/SCL-L21/hwSCL-Q:7.1.1/HuaweiSCL-L21/C432B150:user/release-keys");
-    }
+
     /* SCL-TL00 */
-    if (buf.find("SCL-TL00") != std::string::npos) {
-        property_override("ro.product.model", "SCL-TL00");
-        property_override("ro.product.device", "SCL-TL00");
-        property_override("ro.build.product", "SCL-TL00");
-        property_set("ro.config.dsds_mode", "umts_gsm");
-        property_set("persist.dsds.enabled", "true");
-        property_set("persist.radio.multisim.config", "dsds");
-        property_set("ro.telephony.ril.config", "simactivation");
-        property_set("persist.radio.dont_use_dsd", "true");
-        property_set("ro.multi.rid", "true");
-        property_set("ro.config.hw_showSimName", "true");
-        property_set("ro.dual.sim.phone", "true");
+    } else if (buf.find("SCL-TL00") != string::npos) {
+        set_model("SCL-TL00");
         property_set("ro.build.description", "SCL-TL00-user 7.1.1 GRJ90 C432B150 release-keys");
         property_set("ro.build.fingerprint", "Huawei/SCL-TL00/hwSCL-Q:7.1.1/HuaweiSCL-TL00/C432B150:user/release-keys");
-    }
+
     /* SCL-TL10 */
-    if (buf.find("SCL-TL10") != std::string::npos) {
-        property_override("ro.product.model", "SCL-TL10");
-        property_override("ro.product.device", "SCL-TL10");
-        property_override("ro.build.product", "SCL-TL10");
-        property_set("ro.config.dsds_mode", "umts_gsm");
-        property_set("persist.dsds.enabled", "true");
-        property_set("persist.radio.multisim.config", "dsds");
-        property_set("ro.telephony.ril.config", "simactivation");
-        property_set("persist.radio.dont_use_dsd", "true");
-        property_set("ro.multi.rid", "true");
-        property_set("ro.config.hw_showSimName", "true");
-        property_set("ro.dual.sim.phone", "true");
+    } else if (buf.find("SCL-TL10") != string::npos) {
+        set_model("SCL-TL10");
         property_set("ro.build.description", "SCL-TL10-user 7.1.1 GRJ90 C432B150 release-keys");
         property_set("ro.build.fingerprint", "Huawei/SCL-TL10/hwSCL-Q:7.1.1/HuaweiSCL-TL10/C432B150:user/release-keys");
-    }
+
     /* SCL-U03 */
-    if (buf.find("SCL-U03") != std::string::npos) {
-        property_override("ro.product.model", "SCL-U03");
-        property_override("ro.product.device", "SCL-U03");
-        property_override("ro.build.product", "SCL-U03");
+    } else if (buf.find("SCL-U03") != string::npos) {
+        set_model("SCL-U03");
         property_set("ro.build.description", "SCL-U03-user 7.1.1 GRJ90 C432B150 release-keys");
         property_set("ro.build.fingerprint", "Huawei/SCL-U03/hwSCL-Q:7.1.1/HuaweiSCL-U03/C432B150:user/release-keys");
-    }
+
     /* SCL-U21 */
-    if (buf.find("SCL-U21") != std::string::npos) {
-        property_override("ro.product.model", "SCL-U21");
-        property_override("ro.product.device", "SCL-U21");
-        property_override("ro.build.product", "SCL-U21");
-        property_set("ro.config.dsds_mode", "umts_gsm");
-        property_set("persist.dsds.enabled", "true");
-        property_set("persist.radio.multisim.config", "dsds");
-        property_set("ro.telephony.ril.config", "simactivation");
-        property_set("persist.radio.dont_use_dsd", "true");
-        property_set("ro.multi.rid", "true");
-        property_set("ro.config.hw_showSimName", "true");
-        property_set("ro.dual.sim.phone", "true");
+    } else if (buf.find("SCL-U21") != string::npos) {
+        set_model("SCL-U21");
         property_set("ro.build.description", "SCL-U21-user 7.1.1 GRJ90 C432B150 release-keys");
         property_set("ro.build.fingerprint", "Huawei/SCL-U21/hwSCL-Q:7.1.1/HuaweiSCL-U21/C432B150:user/release-keys");
-    }
+
     /* SCL-U23 */
-    if (buf.find("SCL-U23") != std::string::npos) {
-        property_override("ro.product.model", "SCL-U23");
-        property_override("ro.product.device", "SCL-U23");
-        property_override("ro.build.product", "SCL-U23");
-        property_set("ro.config.dsds_mode", "umts_gsm");
-        property_set("persist.dsds.enabled", "true");
-        property_set("persist.radio.multisim.config", "dsds");
-        property_set("ro.telephony.ril.config", "simactivation");
-        property_set("persist.radio.dont_use_dsd", "true");
-        property_set("ro.multi.rid", "true");
-        property_set("ro.config.hw_showSimName", "true");
-        property_set("ro.dual.sim.phone", "true");
+    } else if (buf.find("SCL-U23") != string::npos) {
+        set_model("SCL-U23");
         property_set("ro.build.description", "SCL-U23-user 7.1.1 GRJ90 C432B150 release-keys");
         property_set("ro.build.fingerprint", "Huawei/SCL-U23/hwSCL-Q:7.1.1/HuaweiSCL-U23/C432B150:user/release-keys");
-    }
+
     /* SCL-U31 */
-    if (buf.find("SCL-U31") != std::string::npos) {
-        property_override("ro.product.model", "SCL-U31");
-        property_override("ro.product.device", "SCL-U31");
-        property_override("ro.build.product", "SCL-U31");
-        property_set("ro.config.dsds_mode", "umts_gsm");
-        property_set("persist.dsds.enabled", "true");
-        property_set("persist.radio.multisim.config", "dsds");
-        property_set("ro.telephony.ril.config", "simactivation");
-        property_set("persist.radio.dont_use_dsd", "true");
-        property_set("ro.multi.rid", "true");
-        property_set("ro.config.hw_showSimName", "true");
-        property_set("ro.dual.sim.phone", "true");
+    } else if (buf.find("SCL-U31") != string::npos) {
+        set_model("SCL-U31");
         property_set("ro.build.description", "SCL-U31-user 7.1.1 GRJ90 C432B150 release-keys");
         property_set("ro.build.fingerprint", "Huawei/SCL-U31/hwSCL-Q:7.1.1/HuaweiSCL-U31/C432B150:user/release-keys");
-    }
+
     /* SCC-U21 */
-    if (buf.find("SCC-U21") != std::string::npos) {
-        property_override("ro.product.model", "SCC-U21");
-        property_override("ro.product.device", "SCC-U21");
-        property_override("ro.build.product", "SCC-U21");
-        property_set("ro.config.dsds_mode", "umts_gsm");
-        property_set("persist.dsds.enabled", "true");
-        property_set("persist.radio.multisim.config", "dsds");
-        property_set("ro.telephony.ril.config", "simactivation");
-        property_set("persist.radio.dont_use_dsd", "true");
-        property_set("ro.multi.rid", "true");
-        property_set("ro.config.hw_showSimName", "true");
-        property_set("ro.dual.sim.phone", "true");
+    } else if (buf.find("SCC-U21") != string::npos) {
+        set_model("SCC-U21");
         property_set("ro.build.description", "SCC-U21-user 7.1.1 GRJ90 C432B150 release-keys");
         property_set("ro.build.fingerprint", "Huawei/SCC-U21/hwSCL-Q:7.1.1/HuaweiSCC-U21/C432B150:user/release-keys");
-    }
+
+    } else
+        LOG(ERROR) << __func__ << ": unexcepted huawei_fac_product_name!";
 }
 
 static void init_alarm_boot_properties()
 {
     char const *boot_reason_file = "/proc/sys/kernel/boot_reason";
     char const *power_off_alarm_file = "/persist/alarm/powerOffAlarmSet";
-    std::string boot_reason;
-    std::string power_off_alarm;
-    std::string tmp = property_get("ro.boot.alarmboot");
+    string boot_reason;
+    string power_off_alarm;
+    string tmp = property_get("ro.boot.alarmboot");
 
-    if (read_file(boot_reason_file, &boot_reason)
-            && read_file(power_off_alarm_file, &power_off_alarm)) {
+    if (ReadFileToString(boot_reason_file, &boot_reason)
+            && ReadFileToString(power_off_alarm_file, &power_off_alarm)) {
         /*
          * Setup ro.alarm_boot value to true when it is RTC triggered boot up
          * For existing PMIC chips, the following mapping applies

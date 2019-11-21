@@ -47,6 +47,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     debug.mdpcomp.idletime=600 \
     persist.hwc.mdpcomp.enable=true \
     persist.hwc.ptor.enable=true \
+    qemu.hw.mainkeys=0 \
     ro.sf.lcd_density=320
 
 # DRM
@@ -69,7 +70,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.data.target=dpm1 \
     persist.data.qmi.adb_logmask=0 \
+    persist.dsds.enabled=true \
     persist.radio.apm_sim_not_pwdn=1 \
+    persist.radio.multisim.config=dsds \
     persist.radio.no_cons_man_roam=1 \
     persist.radio.sib16_support=1\
     ril.ecclist=000,08,100,101,102,110,112,118,119,120,122,911,999 \
