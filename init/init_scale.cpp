@@ -98,6 +98,7 @@ void init_target_properties()
     /* SCL-AL00 */
     if (buf.find("SCL-AL00") != string::npos) {
         set_model("SCL-AL00");
+        property_override("ro.product.brand", "Honor");
         property_override("ro.build.description", "SCL-AL00-user 5.1.1 GRJ90 C00B251 release-keys");
         property_override_dual("ro.build.fingerprint", "ro.bootimage.build.fingerprint", "Honor/SCL-AL00/hnSCL-Q:5.1.1/HonorSCL-AL00/C00B251:user/release-keys");
 
@@ -106,6 +107,7 @@ void init_target_properties()
     /* SCL-CL00 */
     } else if (buf.find("SCL-CL00") != string::npos) {
         set_model("SCL-CL00");
+        property_override("ro.product.brand", "Honor");
         property_override("ro.build.description", "SCL-CL00-user 5.1.1 GRJ90 C92B261 release-keys");
         property_override_dual("ro.build.fingerprint", "ro.bootimage.build.fingerprint", "Honor/SCL-CL00/hnSCL-Q:5.1.1/HonorSCL-CL00/C92B261:user/release-keys");
 
@@ -150,6 +152,7 @@ void init_target_properties()
     /* SCL-TL00 */
     } else if (buf.find("SCL-TL00") != string::npos) {
         set_model("SCL-TL00");
+        property_override("ro.product.brand", "Honor");
         property_override("ro.build.description", "SCL-TL00-user 5.1.1 GRJ90 C01B172 release-keys");
         property_override_dual("ro.build.fingerprint", "ro.bootimage.build.fingerprint", "Honor/SCL-TL00/hnSCL-Q:5.1.1/HonorSCL-TL00/C01B172:user/release-keys");
 
@@ -158,6 +161,7 @@ void init_target_properties()
     /* SCL-TL00H */
     } else if (buf.find("SCL-TL00H") != string::npos) {
         set_model("SCL-TL00H");
+        property_override("ro.product.brand", "Honor");
         property_override("ro.build.description", "SCL-TL00H-user 5.1.1 GRJ90 C00B172 release-keys");
         property_override_dual("ro.build.fingerprint", "ro.bootimage.build.fingerprint", "Honor/SCL-TL00H/hnSCL-Q:5.1.1/HonorSCL-TL00H/C00B172:user/release-keys");
 
@@ -166,12 +170,14 @@ void init_target_properties()
     /* SCL-TL10 */
     } else if (buf.find("SCL-TL10") != string::npos) {
         set_model("SCL-TL10");
+        property_override("ro.product.brand", "Honor");
         property_override("ro.build.description", "SCL-TL10-user 5.1.1 GRJ90 C01B220 release-keys");
         property_override_dual("ro.build.fingerprint", "ro.bootimage.build.fingerprint", "Honor/SCL-TL10/hnSCL-Q:5.1.1/HonorSCL-TL10/C01B220:user/release-keys");
 
     /* SCL-TL10H */
     } else if (buf.find("SCL-TL10H") != string::npos) {
         set_model("SCL-TL10H");
+        property_override("ro.product.brand", "Honor");
         property_override("ro.build.description", "SCL-TL10H-user 5.1.1 GRJ90 C00B220 release-keys");
         property_override_dual("ro.build.fingerprint", "ro.bootimage.build.fingerprint", "Honor/SCL-TL10H/hnSCL-Q:5.1.1/HonorSCL-TL10H/C00B220:user/release-keys");
 
