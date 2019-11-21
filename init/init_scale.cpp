@@ -95,11 +95,15 @@ void init_target_properties()
         property_override("ro.build.description", "SCL-AL00-user 5.1.1 GRJ90 C00B251 release-keys");
         property_override("ro.build.fingerprint", "Honor/SCL-AL00/hnSCL-Q:5.1.1/HonorSCL-AL00/C00B251:user/release-keys");
 
+        property_set("ro.telephony.default_network", "22,1");
+
     /* SCL-CL00 */
     } else if (buf.find("SCL-CL00") != string::npos) {
         set_model("SCL-CL00");
         property_override("ro.build.description", "SCL-CL00-user 5.1.1 GRJ90 C92B261 release-keys");
         property_override("ro.build.fingerprint", "Honor/SCL-CL00/hnSCL-Q:5.1.1/HonorSCL-CL00/C92B261:user/release-keys");
+
+        property_set("ro.telephony.default_network", "8,1");
 
     /* SCL-L01 */
     } else if (buf.find("SCL-L01") != string::npos) {
@@ -119,11 +123,15 @@ void init_target_properties()
         property_override("ro.build.description", "SCL-L03-user 5.1.1 GRJ90 C25B143 release-keys");
         property_override("ro.build.fingerprint", "Huawei/SCL-L03/hwSCL-Q:5.1.1/HuaweiSCL-L03/C25B143:user/release-keys");
 
+        property_set("ro.telephony.default_network", "9,1");
+
     /* SCL-L04 */
     } else if (buf.find("SCL-L04") != string::npos) {
         set_model("SCL-L04");
         property_override("ro.build.description", "SCL-L04-user 5.1.1 GRJ90 C654B141 release-keys");
         property_override("ro.build.fingerprint", "Huawei/SCL-L04/hwSCL-Q:5.1.1/HuaweiSCL-L04/C654B141:user/release-keys");
+
+        property_set("ro.telephony.default_network", "9,1");
 
     /* SCL-L21 */
     } else if (buf.find("SCL-L21") != string::npos) {
@@ -131,17 +139,23 @@ void init_target_properties()
         property_override("ro.build.description", "SCL-L21-user 5.1.1 GRJ90 C432B150 release-keys");
         property_override("ro.build.fingerprint", "Huawei/SCL-L21/hwSCL-Q:5.1.1/HuaweiSCL-L21/C432B150:user/release-keys");
 
+        property_set("ro.telephony.default_network", "9,1");
+
     /* SCL-TL00 */
     } else if (buf.find("SCL-TL00") != string::npos) {
         set_model("SCL-TL00");
         property_override("ro.build.description", "SCL-TL00-user 5.1.1 GRJ90 C01B172 release-keys");
         property_override("ro.build.fingerprint", "Honor/SCL-TL00/hnSCL-Q:5.1.1/HonorSCL-TL00/C01B172:user/release-keys");
 
+        property_set("ro.telephony.default_network", "17,1");
+
     /* SCL-TL00H */
     } else if (buf.find("SCL-TL00H") != string::npos) {
         set_model("SCL-TL00H");
         property_override("ro.build.description", "SCL-TL00H-user 5.1.1 GRJ90 C00B172 release-keys");
         property_override("ro.build.fingerprint", "Honor/SCL-TL00H/hnSCL-Q:5.1.1/HonorSCL-TL00H/C00B172:user/release-keys");
+
+        property_set("ro.telephony.default_network", "17,1");
 
     /* SCL-TL10 */
     } else if (buf.find("SCL-TL10") != string::npos) {
@@ -173,17 +187,23 @@ void init_target_properties()
         property_override("ro.build.description", "SCL-U23-user 5.1.1 GRJ90 C636B140 release-keys");
         property_override("ro.build.fingerprint", "Huawei/SCL-U23/hwSCLU-Q:5.1.1/HuaweiSCL-U23/C636B140:user/release-keys");
 
+        property_set("ro.telephony.default_network", "9,1");
+
     /* SCL-U31 */
     } else if (buf.find("SCL-U31") != string::npos) {
         set_model("SCL-U31");
         property_override("ro.build.description", "SCL-U31-user 5.1.1 GRJ90 C185B161 release-keys");
         property_override("ro.build.fingerprint", "Huawei/SCL-U31/hwSCLU-Q:5.1.1/HuaweiSCL-U31/C185B161:user/release-keys");
 
+        property_set("ro.telephony.default_network", "9,1");
+
     /* SCC-U21 */
     } else if (buf.find("SCC-U21") != string::npos) {
         set_model("SCC-U21");
         property_override("ro.build.description", "SCC-U21-user 5.1.1 GRJ90 C636B170 release-keys");
         property_override("ro.build.fingerprint", "Huawei/SCC-U21/hwSCC-Q:5.1.1/HuaweiSCC-U21/C636B170:user/release-keys");
+
+        property_set("ro.telephony.default_network", "9,1");
 
     } else
         LOG(ERROR) << __func__ << ": unexcepted huawei_fac_product_name!";
