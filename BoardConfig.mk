@@ -17,7 +17,7 @@
 DEVICE_PATH := device/huawei/scale
 
 # Bootloader
-TARGET_BOOTLOADER_BOARD_NAME := msm8909
+TARGET_BOOTLOADER_BOARD_NAME := MSM8909
 TARGET_NO_BOOTLOADER := true
 
 # Platform
