@@ -19,17 +19,15 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 # Inherit device configuration
 $(call inherit-product, device/huawei/scale/device.mk)
 
-# Inherit some common LineageOS stuff.
-$(call inherit-product, vendor/cm/config/common_full_phone.mk)
+# Inherit some common AIM stuff.
+$(call inherit-product, vendor/aim/config/common_full_phone.mk)
 
 # Boot animation
-TARGET_SCREEN_HEIGHT := 1280
 TARGET_SCREEN_WIDTH := 720
-TARGET_BOOTANIMATION_HALF_RES := true
 
 # Device identifications
 PRODUCT_DEVICE := scale
-PRODUCT_NAME := lineage_scale
+PRODUCT_NAME := aim_scale
 PRODUCT_BRAND := Huawei
 PRODUCT_MODEL := scale
 PRODUCT_MANUFACTURER := HUAWEI
