@@ -1,0 +1,19 @@
+# Crypto
+TW_INCLUDE_CRYPTO := true
+
+# TWRP specific build flags
+TW_THEME := portrait_hdpi
+TW_BRIGHTNESS_PATH := /sys/class/leds/lcd-backlight/brightness
+TW_NO_SCREEN_TIMEOUT := true
+TW_NEW_ION_HEAP := true
+TW_TARGET_USES_QCOM_BSP := true
+TARGET_RECOVERY_QCOM_RTC_FIX := true
+TARGET_RECOVERY_PIXEL_FORMAT := "RGBA_8888"
+BOARD_SUPPRESS_SECURE_ERASE := true
+RECOVERY_GRAPHICS_FORCE_USE_LINELENGTH := true
+RECOVERY_SDCARD_ON_DATA := true
+TW_EXTRA_LANGUAGES := true
+TW_INPUT_BLACKLIST := "accelerometer\x0alis3dh-accel"
+TW_NO_EXFAT_FUSE := true
+
+TW_EXCLUDE_TWRPAPP := true
