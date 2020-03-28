@@ -28,7 +28,7 @@ if [[ ! -d "$MY_DIR" ]]; then MY_DIR="$PWD"; fi
 
 CM_ROOT="$MY_DIR"/../../..
 
-HELPER="$CM_ROOT"/vendor/cm/build/tools/extract_utils.sh
+HELPER="$CM_ROOT"/vendor/aim/build/tools/extract_utils.sh
 if [ ! -f "$HELPER" ]; then
     echo "Unable to find helper script at $HELPER"
     exit 1
@@ -43,20 +43,6 @@ write_headers
 
 # The standard common blobs
 write_makefiles "$MY_DIR"/proprietary-files.txt
-
-# Qualcomm BSP blobs - we put a conditional around here
-# in case the BSP is actually being built
-printf '\n%s\n' "ifeq (\$(QCPATH),)" >> "$PRODUCTMK"
-printf '\n%s\n' "ifeq (\$(QCPATH),)" >> "$ANDROIDMK"
-
-write_makefiles "$MY_DIR"/proprietary-files-qc.txt
-
-echo "endif" >> "$PRODUCTMK"
-
-cat << EOF >> "$ANDROIDMK"
-endif
-
-EOF
 
 # We are done!
 write_footers

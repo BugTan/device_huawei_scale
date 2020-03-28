@@ -224,4 +224,3 @@ PRODUCT_COPY_FILES += \
 
 # Vendor product configurations
 $(call inherit-product, vendor/huawei/scale/scale-vendor.mk)
-$(call inherit-product, vendor/huawei/msm8909-common/msm8909-common-vendor.mk)

@@ -193,4 +193,4 @@ WIFI_DRIVER_FW_PATH_AP := "ap"
 WPA_SUPPLICANT_VERSION := VER_0_8_X
 
 # Inherit from the proprietary version
-include vendor/huawei/msm8909-common/BoardConfigVendor.mk
+include vendor/huawei/scale/BoardConfigVendor.mk
