@@ -36,7 +36,7 @@ PRODUCT_GMS_CLIENTID_BASE := android-huawei
 
 # AIM OTA
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.ota.romname=AIM-ROM \
+    ro.ota.romname=AIMROM \
     ro.ota.version=$(shell date -u +"%Y%m%d") \
     ro.aim.maintainer=krasCGQ \
-    ro.ota.manifest=https://raw.githubusercontent.com/AIMROM/OFFICIAL_DEVICES/N/scale.xml
+    ro.ota.manifest=https://raw.githubusercontent.com/AIMROM/AIM_OTA/N/scale.xml
