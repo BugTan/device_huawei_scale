@@ -207,7 +207,7 @@ void init_target_properties()
         property_override("ro.build.description", "SCL-U31-user 5.1.1 GRJ90 C185B161 release-keys");
         property_override_dual("ro.build.fingerprint", "ro.bootimage.build.fingerprint", "Huawei/SCL-U31/hwSCLU-Q:5.1.1/HuaweiSCL-U31/C185B161:user/release-keys");
 
-        property_set("ro.telephony.default_network", "9,1");
+        property_set("ro.telephony.default_network", "0,1");
 
     /* SCC-U21 */
     } else if (buf.find("SCC-U21") != string::npos) {
