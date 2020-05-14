@@ -110,13 +110,29 @@ $(WV_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 
 ALL_DEFAULT_INSTALLED_MODULES += $(WV_SYMLINKS)
 
-# Create a link for the WCNSS files
-$(shell mkdir -p $(TARGET_OUT)/etc/firmware/wlan/prima; \
-    ln -sf /data/misc/wifi/WCNSS_qcom_cfg.ini \
-	    $(TARGET_OUT)/etc/firmware/wlan/prima/WCNSS_qcom_cfg.ini; \
-    ln -sf /persist/WCNSS_qcom_wlan_nv.bin \
-	    $(TARGET_OUT)/etc/firmware/wlan/prima/WCNSS_qcom_wlan_nv.bin; \
-    ln -sf /persist/WCNSS_wlan_dictionary.dat \
-            $(TARGET_OUT)/etc/firmware/wlan/prima/WCNSS_wlan_dictionary.dat)
+# Create a link for the WCNSS config file, which ends up as a writable
+# version in /data/misc/wifi
+WCNSS_CONFIG := WCNSS_qcom_cfg.ini
+
+WCNSS_CONFIG_SYMLINK := $(addprefix $(TARGET_OUT_ETC)/firmware/wlan/prima/,$(notdir $(WCNSS_CONFIG)))
+$(WCNSS_CONFIG_SYMLINK): $(LOCAL_INSTALLED_MODULE)
+	@echo "WCNSS config link: $@"
+	@mkdir -p $(dir $@)
+	@rm -rf $@
+	$(hide) ln -sf /data/misc/wifi/$(notdir $@) $@
+
+ALL_DEFAULT_INSTALLED_MODULES += $(WCNSS_CONFIG_SYMLINK)
+
+WLAN_FIRMWARES := \
+    WCNSS_qcom_wlan_nv.bin WCNSS_wlan_dictionary.dat
+
+WLAN_SYMLINKS := $(addprefix $(TARGET_OUT_ETC)/firmware/wlan/prima/,$(notdir $(WLAN_FIRMWARES)))
+$(WLAN_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
+	@echo "WLAN firmware link: $@"
+	@mkdir -p $(dir $@)
+	@rm -rf $@
+	$(hide) ln -sf /persist/$(notdir $@) $@
+
+ALL_DEFAULT_INSTALLED_MODULES += $(WLAN_SYMLINKS)
 
 endif
