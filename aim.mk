@@ -38,8 +38,12 @@ PRODUCT_SYSTEM_PROPERTY_BLACKLIST += \
     ro.product.model
 
 # AIM OTA
+ifeq ($(AIM_BUILD_TYPE),OFFICIAL)
+ifneq ($(RECOVERY_VARIANT),twrp)
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.ota.romname=AIMROM \
     ro.ota.version=$(shell date -u +"%Y%m%d") \
     ro.aim.maintainer=krasCGQ \
     ro.ota.manifest=https://raw.githubusercontent.com/AIMROM/AIM_OTA/N/scale.xml
+endif
+endif
