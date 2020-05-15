@@ -147,6 +147,9 @@ BOARD_USES_QCOM_HARDWARE := true
 # Recovery
 TARGET_RECOVERY_DEVICE_DIRS += $(DEVICE_PATH)
 ifeq ($(RECOVERY_VARIANT),twrp)
+ifneq ($(TARGET_BUILD_VARIANT),eng)
+$(error RECOVERY_VARIANT=twrp can only be used with eng build)
+endif
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/twrp.fstab
 -include $(DEVICE_PATH)/twrp.mk
 else
