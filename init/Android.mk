@@ -2,6 +2,10 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
+ifeq ($(RECOVERY_VARIANT),twrp)
+LOCAL_CPPFLAGS += -DNO_PRODUCT_OVERRIDE
+endif
+
 LOCAL_MODULE_TAGS := optional
 LOCAL_C_INCLUDES := \
     system/core/base/include \

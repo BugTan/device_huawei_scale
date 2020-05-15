@@ -1,7 +1,7 @@
 /*
    Copyright (c) 2014, The Linux Foundation. All rights reserved.
    Copyright (c) 2016, The CyanogenMod Project
-   Copyright (c) 2019, The LineageOS Project
+   Copyright (c) 2019-2020, The LineageOS Project
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are
@@ -74,8 +74,10 @@ void property_override_dual(char const system_prop[], char const boot_prop[], ch
 }
 
 void set_model(const char *model) {
+#ifndef NO_PRODUCT_OVERRIDE
     property_override("ro.build.product", model);
     property_override("ro.product.device", model);
+#endif
     property_override("ro.product.model", model);
 }
 
