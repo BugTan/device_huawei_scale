@@ -19,6 +19,7 @@
 
 #include <cutils/log.h>
 #include <string.h>
+#include <unistd.h>
 
 /* liboeminfo_oem_api.so */
 #define RMT_OEMINFO_WIFI_MAC_ENC 0x34
@@ -68,11 +69,19 @@ int wcnss_qmi_get_wlan_address(unsigned char *wlan_mac)
     }
 
     ALOGD("Reading crypted Wi-Fi MAC address\n");
+retry_read:
     ret = remote_oeminfo_read(RMT_OEMINFO_WIFI_MAC_ENC,
                   sizeof(mac_crypted), mac_crypted);
     if (ret != 1) {
-        ALOGE("Failed to read crypted Wi-Fi MAC address ret=%d\n", ret);
-        return -1;
+        if (ret == 16) {
+            /* Retry reading, system might be busy at this moment. */
+            ALOGW("Unable to read crypted Wi-Fi MAC address, retrying after 1 second...\n");
+            sleep(1);
+            goto retry_read;
+        } else {
+            ALOGE("Failed to read crypted Wi-Fi MAC address ret=%d\n", ret);
+            return -1;
+        }
     }
 
     ALOGD("Decrypting Wi-Fi MAC address\n");
