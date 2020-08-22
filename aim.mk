@@ -38,7 +38,7 @@ PRODUCT_SYSTEM_PROPERTY_BLACKLIST += \
     ro.product.model
 
 # AIM OTA
-ifeq ($(AIM_BUILD_TYPE),OFFICIAL)
+ifeq ($(AIM_BUILDTYPE),OFFICIAL)
 ifneq ($(RECOVERY_VARIANT),twrp)
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.ota.romname=AIMROM \
