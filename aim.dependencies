@@ -12,7 +12,7 @@
     "target_path": "external/stlport"
   },
   {
-    "repository": "HUAWEI-SCALE-DES/android_kernel_huawei_msm8916",
+    "repository": "BugTan/android_kernel_huawei_msm8916",
     "target_path": "kernel/huawei/msm8916"
   },
   {
